@@ -32,7 +32,7 @@ function createRandomButton() {
       goToAllPages();
       setTimeout(function() {
         clickRandomPage(e.shiftKey);
-        history.back();
+        if (e.shiftKey) { history.back(); }
       }, 1000);
     }
   }
