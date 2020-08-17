@@ -3,7 +3,7 @@ if (randomButton != null) {
   randomButton.parentNode.removeChild(randomButton);
 }
 function getEventHandlers(element) {
-  for (var prop in leftMenu) {
+  for (var prop in element) {
     if (prop.includes('reactEventHandlers')) {
       return element[prop];
     }
@@ -22,21 +22,28 @@ function clickRandomPage(shift) {
     pageLink.click();
   }
 }
+function goToRandomPage(e) {
+  if (window.location.hash.endsWith('/search')) {
+    clickRandomPage(e.shiftKey);
+  } else {
+    goToAllPages();
+    setTimeout(function() {
+      clickRandomPage(e.shiftKey);
+      if (e.shiftKey) { history.back(); }
+    }, 1000);
+  }
+}
 function createRandomButton() {
   var template = document.createElement('template');
   template.innerHTML = '<div id="random-button" class="log-button" href="#"><div class="flex-h-box" style="align-items:center;justify-content:space-between;"><span class="bp3-icon bp3-icon-random icon"></span>RANDOM</div></div>';
-  template.content.firstChild.onclick = function(e) {
-    if (window.location.hash.endsWith('/search')) {
-      clickRandomPage(e.shiftKey);
-    } else {
-      goToAllPages();
-      setTimeout(function() {
-        clickRandomPage(e.shiftKey);
-        if (e.shiftKey) { history.back(); }
-      }, 1000);
-    }
-  }
+  template.content.firstChild.onclick = goToRandomPage;
   return template.content.firstChild;
 }
 const starred = document.querySelector('.starred-pages-wrapper');
 document.querySelector('.roam-sidebar-content').insertBefore(createRandomButton(), starred);
+document.onkeyup = function(e) {
+  var key = e.which || e.keyCode;
+  if (e.altKey && key === 82 /* Alt+R */) {
+    goToRandomPage(e);
+  }
+}
