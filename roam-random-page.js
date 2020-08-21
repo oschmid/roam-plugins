@@ -30,7 +30,7 @@ function goToRandomPage(e) {
     setTimeout(function() {
       clickRandomPage(e.shiftKey);
       if (e.shiftKey) { history.back(); }
-    }, 1000);
+    }, 500);
   }
 }
 function createRandomButton() {
