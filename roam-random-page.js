@@ -40,8 +40,8 @@ function goToRandomPage(e) {
       history.back();
     }, timeout);
   } else {
-    const pages = roamAlphaAPI.q('[ :find (pull ?e [:block/uid]) :where [?e :node/title]]');
-    const page = pages[Math.floor(Math.random()*pages.length)];
+    const allPages = roamAlphaAPI.q('[ :find (pull ?e [:block/uid]) :where [?e :node/title]]');
+    const page = getRandomElement(allPages);
     const uid = page[0].uid;
     const db = location.hash.split('/')[2];
     location.assign('/#/app/' + db + '/page/' + uid);
@@ -58,9 +58,13 @@ function goToAllPages() {
 
 function clickRandomPageLink(shift) {
   // https://forum.roamresearch.com/t/what-would-be-your-top-3-tips-for-beginners/255/9
-  var allpages = document.querySelectorAll('div.rm-pages-title-col a');
-  var pageLink = allpages[Math.floor(Math.random()*allpages.length)];
+  var allPages = document.querySelectorAll('div.rm-pages-title-col a');
+  var pageLink = getRandomElement(allPages);
   getEventHandlers(pageLink).onClick({ shiftKey: shift });
+}
+
+function getRandomElement(array) {
+  return array[Math.floor(Math.random() * array.length)];
 }
 
 function getEventHandlers(element) {
