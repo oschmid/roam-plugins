@@ -1,4 +1,4 @@
-# roam-random-page-plugin
+# roam-plugins
 
 ## Features
 
