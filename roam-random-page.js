@@ -2,7 +2,6 @@
 const title = 'RANDOM';
 const icon = 'bp3-icon bp3-icon-random icon';
 const shortcut = 82; // Alt+R
-const timeout = 500; // ms
 
 function addButton() {
   // cleanup old versions of the button
@@ -34,11 +33,10 @@ function goToRandomPage(e) {
   if (isAllPages()) {
     clickRandomPageLink(e.shiftKey);
   } else if (e.shiftKey) {
-    goToAllPages();
-    setTimeout(function() {
+    goToAllPagesThen(function() {
       clickRandomPageLink(e.shiftKey);
       history.back();
-    }, timeout);
+    });
   } else {
     const allPages = roamAlphaAPI.q('[ :find (pull ?e [:block/uid]) :where [?e :node/title]]');
     const page = getRandomElement(allPages);
@@ -52,8 +50,9 @@ function isAllPages() {
   return location.hash.endsWith('/search');
 }
 
-function goToAllPages() {
+function goToAllPagesThen(f) {
   document.querySelector('.bp3-icon-list').parentNode.parentNode.click();
+  setTimeout(f, 0);
 }
 
 function clickRandomPageLink(shift) {
