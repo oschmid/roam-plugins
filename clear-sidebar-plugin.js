@@ -10,7 +10,7 @@ function clearSidebarPlugin() {
     }
     // create button
     var template = document.createElement('template');
-    template.innerHTML = '<button id="clear-button" class="bp3-button bp3-minimal bp3-small bp3-icon-standard bp3-icon-cross"></button>';
+    template.innerHTML = '<button id="clear-button" title="Clear All" class="bp3-button bp3-minimal bp3-small bp3-icon-standard bp3-icon-cross"></button>';
     template.content.firstChild.onclick = clearSidebar;
     clearButton = template.content.firstChild;
     
