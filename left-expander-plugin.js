@@ -1,21 +1,26 @@
 function leftExpanderPlugin() {
   
   function addHoverElement() {
+    // cleanup old versions of the element
     var leftExpander = document.querySelector('#left-expander');
     if (leftExpander != null) {
       leftExpander.parentNode.removeChild(leftExpander);
     }
-    leftExpander = document.createElement('span');
-    leftExpander.id = 'left-expander';
-    leftExpander.style.height = '100%';
-    leftExpander.style.width = '1em';
-    leftExpander.style.position = 'absolute';
-    leftExpander.addEventListener('mouseenter', function(e) {
-      const leftMenu = document.querySelector('.bp3-icon-menu');
-      if (!leftMenu) { return; }
-      getEventHandlers(leftMenu).onMouseEnter();
-    });
+    // create element
+    var template = document.createElement('template');
+    template.innerHTML = '<span id="left-expander" style="height:100%;width:1em;position:absolute"></span>';
+    leftExpander = template.content.firstChild;
+    leftExpander.addEventListener('mouseenter', forwardMouseEnter);
+    
+    // insert element
     document.querySelector('.roam-body-main').prepend(leftExpander);
+  }
+  
+  function forwardMouseEnter() {
+    const leftMenu = document.querySelector('.bp3-icon-menu');
+    if (leftMenu) {
+      getEventHandlers(leftMenu).onMouseEnter();
+    }
   }
 
   function getEventHandlers(element) {
