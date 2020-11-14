@@ -1,8 +1,12 @@
 function randomPagePlugin() {
+  function isMac() {
+    return window.navigator.platform.startsWith('Mac');
+  }
+  
   // settings
   const title = 'RANDOM';
   const icon = 'bp3-icon bp3-icon-random icon';
-  const shortcut = 82; // Alt+R
+  const shortcut = isMac() ? {ctrlKey: true, key: "r"} : {altKey: true, key: "r"};
 
   function addButton() {
     // cleanup old versions of the button
@@ -23,10 +27,10 @@ function randomPagePlugin() {
 
   function addKeyboardShortcut() {
     document.onkeyup = function(e) {
-      var key = e.which || e.keyCode;
-      if (e.altKey && key === shortcut) {
-        goToRandomPage(e);
-      }
+      if (shortcut.ctrlKey && !e.ctrlKey) return;
+      if (shortcut.shiftKey && !e.shiftKey) return;
+      if (shortcut.altKey && !e.altKey) return;
+      if (shortcut.key === e.key) goToRandomPage(e);
     }
   }
 
