@@ -4,25 +4,35 @@ function randomPagePlugin() {
   }
   
   // settings
-  const title = 'RANDOM';
-  const icon = 'bp3-icon bp3-icon-random icon';
+  const title = 'Go to random page';
+  const icon = 'bp3-button bp3-minimal bp3-icon-random pointer bp3-small';
   const shortcut = isMac() ? {ctrlKey: true, key: "r"} : {altKey: true, key: "r"};
 
   function addButton() {
     // cleanup old versions of the button
+    var spacer = document.querySelector('#random-spacer');
+    if (spacer != null) {
+      spacer.parentNode.removeChild(spacer);
+    }
     var randomButton = document.querySelector('#random-button');
     if (randomButton != null) {
       randomButton.parentNode.removeChild(randomButton);
     }
     // create button
     var template = document.createElement('template');
-    template.innerHTML = '<div id="random-button" class="log-button" href="#"><div class="flex-h-box" style="align-items:center;justify-content:space-between;"><span class="' + icon + '"></span>' + title + '</div></div>';
+    template.innerHTML = '<div id="random-spacer" style="flex: 0 0 4px;"></div>';
+    spacer = template.content.firstChild;
+    
+    template = document.createElement('template');
+    template.innerHTML = '<span id="random-button" title="' + title + '" class="' + icon + '"></span>';
     template.content.firstChild.onclick = goToRandomPage;
     randomButton = template.content.firstChild;
 
-    // insert button into sidebar
-    const starred = document.querySelector('.starred-pages-wrapper');
-    document.querySelector('.roam-sidebar-content').insertBefore(randomButton, starred);
+    // insert button into topbar
+    const topbar = document.querySelector('.roam-topbar .flex-h-box');
+    const flex = document.querySelector('.roam-topbar div[style="flex: 1 1 0px;"]');
+    topbar.insertBefore(spacer, flex);
+    topbar.insertBefore(randomButton, flex);
   }
 
   function addKeyboardShortcut() {
