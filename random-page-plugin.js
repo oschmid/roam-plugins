@@ -10,29 +10,20 @@ function randomPagePlugin() {
 
   function addButton() {
     // cleanup old versions of the button
-    var spacer = document.querySelector('#random-spacer');
-    if (spacer != null) {
-      spacer.parentNode.removeChild(spacer);
-    }
     var randomButton = document.querySelector('#random-button');
     if (randomButton != null) {
       randomButton.parentNode.removeChild(randomButton);
     }
     // create button
     var template = document.createElement('template');
-    template.innerHTML = '<div id="random-spacer" style="flex: 0 0 4px;"></div>';
-    spacer = template.content.firstChild;
-    
-    template = document.createElement('template');
     template.innerHTML = '<span id="random-button" title="' + title + '" class="' + icon + '"></span>';
     template.content.firstChild.onclick = goToRandomPage;
     randomButton = template.content.firstChild;
 
     // insert button into topbar
     const topbar = document.querySelector('.roam-topbar .flex-h-box');
-    const flex = document.querySelector('.roam-topbar div[style="flex: 1 1 0px;"]');
-    topbar.insertBefore(spacer, flex);
-    topbar.insertBefore(randomButton, flex);
+    const dots = document.querySelector('.roam-topbar div[style="margin-left: 4px;"]');
+    topbar.insertBefore(randomButton, dots);
   }
 
   function addKeyboardShortcut() {
