@@ -8,12 +8,12 @@ function leftExpanderPlugin() {
     }
     // create element
     var template = document.createElement('template');
-    template.innerHTML = '<span id="left-expander" style="height:100%;width:1em;position:absolute"></span>';
+    template.innerHTML = '<span id="left-expander" style="position:absolute;height:100%;width:1em;position:absolute"></span>';
     leftExpander = template.content.firstChild;
     leftExpander.addEventListener('mouseenter', forwardMouseEnter);
     
     // insert element
-    document.querySelector('.roam-body-main').prepend(leftExpander);
+    document.querySelector('.roam-main').prepend(leftExpander);
   }
   
   function forwardMouseEnter() {
