@@ -33,4 +33,4 @@ function leftExpanderPlugin() {
 
   addHoverElement();
 }
-leftExpanderPlugin();
+setTimeout(leftExpanderPlugin, 1000);

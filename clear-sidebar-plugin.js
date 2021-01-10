@@ -35,4 +35,4 @@ function clearSidebarPlugin() {
   addButton();
   addKeyboardShortcut();
 }
-clearSidebarPlugin();
+setTimeout(clearSidebarPlugin, 1000);

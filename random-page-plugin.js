@@ -83,4 +83,4 @@ function randomPagePlugin() {
   addButton();
   addKeyboardShortcut();
 }
-randomPagePlugin();
+setTimeout(randomPagePlugin, 1000);
