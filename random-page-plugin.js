@@ -2,9 +2,9 @@ function randomPagePlugin() {
   function isMac() {
     return window.navigator.platform.startsWith('Mac');
   }
-  
+
   // settings
-  const title = 'Go to random page';
+  const title = 'RANDOM';
   const icon = 'bp3-button bp3-minimal bp3-icon-random pointer bp3-small';
   const shortcut = isMac() ? {ctrlKey: true, key: "r"} : {altKey: true, key: "r"};
 
@@ -16,14 +16,14 @@ function randomPagePlugin() {
     }
     // create button
     var template = document.createElement('template');
-    template.innerHTML = '<span id="random-button" title="' + title + '" class="' + icon + '"></span>';
+    template.innerHTML = '<div href="#" class="log-button"><div class="flex-h-box" style="align-items: center; justify-content: space-between;"><span class="' + icon + '"></span>' + title + '</div></div>'
     template.content.firstChild.onclick = goToRandomPage;
     randomButton = template.content.firstChild;
 
     // insert button into topbar
-    const topbar = document.querySelector('.roam-topbar .flex-h-box');
-    const dots = document.querySelector('.roam-topbar div[style="margin-left: 4px;"]');
-    topbar.insertBefore(randomButton, dots);
+    const sidebar = document.querySelector('.roam-sidebar-content');
+    const starred = document.querySelector('.roam-sidebar-content .starred-pages-wrapper');
+    sidebar.insertBefore(randomButton, starred);
   }
 
   function addKeyboardShortcut() {
