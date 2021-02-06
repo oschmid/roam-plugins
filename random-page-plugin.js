@@ -19,10 +19,19 @@ function randomPagePlugin() {
     template.innerHTML = '<span id="random-button" title="' + title + '" class="' + icon + '"></span>';
     template.content.firstChild.onclick = goToRandomPage;
     randomButton = template.content.firstChild;
+    
+    // create spacer
+    var spacer = document.querySelector('#random-spacer');
+    if (spacer != null) {
+      spacer.parentNode.removeChild(spacer);
+    }
+    template.innerHTML = '<div id="random-spacer" class="rm-topbar__spacer-sm"></div>';
+    spacer = template.content.firstChild;
 
     // insert button into topbar
     const search = document.querySelector('.rm-topbar .rm-find-or-create-wrapper');
     search.insertAdjacentElement('afterend', randomButton);
+    search.insertAdjacentElement('afterend', spacer);
   }
 
   function addKeyboardShortcut() {
