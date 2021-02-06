@@ -21,9 +21,8 @@ function randomPagePlugin() {
     randomButton = template.content.firstChild;
 
     // insert button into topbar
-    const topbar = document.querySelector('.roam-topbar .flex-h-box');
-    const dots = document.querySelector('.roam-topbar div[style="margin-left: 4px;"]');
-    topbar.insertBefore(randomButton, dots);
+    const search = document.querySelector('.rm-topbar .rm-find-or-create-wrapper');
+    search.insertAdjacentElement('afterend', randomButton);
   }
 
   function addKeyboardShortcut() {
@@ -83,4 +82,4 @@ function randomPagePlugin() {
   addButton();
   addKeyboardShortcut();
 }
-setTimeout(randomPagePlugin, 1000);
+setTimeout(randomPagePlugin, 0);
