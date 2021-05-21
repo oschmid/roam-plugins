@@ -20,19 +20,23 @@ function clearSidebarPlugin() {
   }
 
   function addKeyboardShortcut() {
-    document.onkeyup = function(e) {
+    document.onkeyup = async function(e) {
       var key = e.which || e.keyCode;
       if (e.altKey && key === shortcut) {
-        clearSidebar();
+        await clearSidebar();
       }
     }
   }
 
-  function clearSidebar() {
-    document.querySelectorAll('.bp3-icon-cross').forEach(e => e.click());
+  async function clearSidebar() {
+    var x;
+    while ((x = document.querySelector('.bp3-icon-cross:not(#clear-button)')) !== null) {
+      x.click();
+      await new Promise(r => setTimeout(r, 0)); // let Roam re-render before deleting next block
+    }
   }
 
   addButton();
   addKeyboardShortcut();
 }
-setTimeout(clearSidebarPlugin, 1000);
+setTimeout(clearSidebarPlugin, 0);
