@@ -35,57 +35,31 @@ function randomPagePlugin() {
   }
 
   function addKeyboardShortcut() {
-    document.onkeyup = function(e) {
+    document.onkeydown = function(e) {
       if (shortcut.ctrlKey && !e.ctrlKey) return;
       if (shortcut.shiftKey && !e.shiftKey) return;
       if (shortcut.altKey && !e.altKey) return;
-      if (shortcut.key === e.key) goToRandomPage(e);
+      if (shortcut.key === e.key.toLowerCase()) {
+        e.preventDefault();
+        goToRandomPage(e);
+      }
     }
   }
 
   function goToRandomPage(e) {
-    if (isAllPages()) {
-      clickRandomPageLink(e.shiftKey);
-    } else if (e.shiftKey) {
-      goToAllPagesThen(function() {
-        clickRandomPageLink(e.shiftKey);
-        history.back();
-      });
+    const allPages = roamAlphaAPI.q('[ :find (pull ?e [:block/uid]) :where [?e :node/title]]');
+    const page = getRandomElement(allPages);
+    const uid = page[0].uid;
+    const db = location.hash.split('/')[2];
+    if (e.shiftKey) {
+      roamAlphaAPI.ui.rightSidebar.addWindow({window:{type:'block','block-uid':uid}});
     } else {
-      const allPages = roamAlphaAPI.q('[ :find (pull ?e [:block/uid]) :where [?e :node/title]]');
-      const page = getRandomElement(allPages);
-      const uid = page[0].uid;
-      const db = location.hash.split('/')[2];
-      location.assign('/#/app/' + db + '/page/' + uid);
+      setTimeout(function(){location.assign('/#/app/' + db + '/page/' + uid);}, 0);
     }
-  }
-
-  function isAllPages() {
-    return location.hash.endsWith('/search');
-  }
-
-  function goToAllPagesThen(f) {
-    document.querySelector('.bp3-icon-list').parentNode.parentNode.click();
-    setTimeout(f, 0);
-  }
-
-  function clickRandomPageLink(shift) {
-    // https://forum.roamresearch.com/t/what-would-be-your-top-3-tips-for-beginners/255/9
-    var allPages = document.querySelectorAll('div.rm-pages-title-col a');
-    var pageLink = getRandomElement(allPages);
-    getEventHandlers(pageLink).onClick({ shiftKey: shift });
   }
 
   function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
-  }
-
-  function getEventHandlers(element) {
-    for (var prop in element) {
-      if (prop.includes('reactEventHandlers')) {
-        return element[prop];
-      }
-    }
   }
 
   addButton();
