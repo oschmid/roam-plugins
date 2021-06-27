@@ -25,11 +25,14 @@ function randomPagePlugin() {
     if (spacer != null) {
       spacer.parentNode.removeChild(spacer);
     }
-    template.innerHTML = '<div id="random-spacer" class="rm-topbar__spacer-sm"></div>';
+    template.innerHTML = 
+      '<div class="log-button"><span id="random-button" class="' 
+      + icon + '"></span>' + title + '</div>';
     spacer = template.content.firstChild;
 
     // insert button into topbar
-    const search = document.querySelector('.rm-topbar .rm-find-or-create-wrapper');
+    var nodes = document.querySelectorAll('.log-button');
+	  var search = nodes[nodes.length-1];
     search.insertAdjacentElement('afterend', randomButton);
     search.insertAdjacentElement('afterend', spacer);
   }
