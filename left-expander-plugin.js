@@ -13,24 +13,16 @@ function leftExpanderPlugin() {
     leftExpander.addEventListener('mouseenter', forwardMouseEnter);
     
     // insert element
-    document.querySelector('.roam-main').prepend(leftExpander);
+    document.querySelector('.roam-main').parentElement.prepend(leftExpander);
   }
   
   function forwardMouseEnter() {
     const leftMenu = document.querySelector('.bp3-icon-menu');
     if (leftMenu) {
-      getEventHandlers(leftMenu).onMouseEnter();
-    }
-  }
-
-  function getEventHandlers(element) {
-    for (var prop in element) {
-      if (prop.includes('reactEventHandlers')) {
-        return element[prop];
-      }
+      leftMenu.dispatchEvent(new MouseEvent('mouseover', {'bubbles': true}));
     }
   }
 
   addHoverElement();
 }
-setTimeout(leftExpanderPlugin, 1000);
+setTimeout(leftExpanderPlugin, 0);
