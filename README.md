@@ -8,7 +8,7 @@ Also adds a keyboard shortcut (Alt/Opt + C) to clear all blocks/pages from sideb
 
 ### Left Expander Plugin
 
-Makes it so moving the mouse anywhere along the left side will expand the left sidebar. Handy if you like the left sidebar collapsed when writing but find youself hunting for the tiny menu button to expand it.
+Moved to Roam Depot. Source [here](https://github.com/oschmid/roam-left-expander/)
 
 ### Random Page Plugin
 
